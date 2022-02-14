@@ -53,13 +53,14 @@ public class MusicaServiceImpl implements MusicaService {
     public MusicaDto atualizarMusica(String id, MusicaDto musica) {
         Optional<Musica> musicaDesatualizada = repositorio.findById(id);
         ModelMapper mapper = new ModelMapper();
-        if(musicaDesatualizada.isPresent())
+        if(musicaDesatualizada.isPresent()){
             musicaDesatualizada.get().setTitulo(musica.getTitulo());
             musicaDesatualizada.get().setAlbum(musica.getAlbum());
             musicaDesatualizada.get().setAnoLancamento(musica.getAnoLancamento());
             musicaDesatualizada.get().setCompositor(musica.getCompositor());
             musicaDesatualizada.get().setGenero(musica.getGenero());
-        
+            repositorio.save(musicaDesatualizada.get());
+        }
         return mapper.map(musicaDesatualizada, MusicaDto.class);
     }
 
